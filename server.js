@@ -2,6 +2,8 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 
+const port = process.env.PORT || 3000;
+
 var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials');
@@ -19,10 +21,10 @@ app.use((req, res, next) =>{
   next();
 });
 
-app.use((req, res, next) => {
-  //we dont call next() so the rest would not execute
-  res.render('maintenance.hbs');
-});
+// app.use((req, res, next) => {
+//   //we dont call next() so the rest would not execute
+//   res.render('maintenance.hbs');
+// });
 //if this statement is over the maintenance then it would still exec
 app.use(express.static(__dirname + '/public'));
 
@@ -55,4 +57,6 @@ app.get('/bad', (request, response) =>{
   })
 })
 
-app.listen(3000);
+app.listen(port, () =>{
+  console.log(`Server is up on port ${port}.`);
+});
